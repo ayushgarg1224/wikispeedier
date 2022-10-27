@@ -1,0 +1,2 @@
+# wikispeedier
+speedier than wikispeedia
