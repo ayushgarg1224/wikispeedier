@@ -10,6 +10,7 @@ class WikiNode{
         WikiNode(string name);
 
         string getName();
+        string getNameParsed();
         vector<WikiNode*> getLinks();
 
         void addConnection(WikiNode* other);

@@ -8,12 +8,11 @@ using namespace std;
 class Graph{
     public:
         Graph();
-        Graph(string file_path);
         ~Graph();
         WikiNode* getPage(string page_name);
-        void createGraphFromFile(string file_path);
+        void createGraphFromFile(string articles_path, string links_path);
 
-    private:
         void addNode(WikiNode* node);
+    private:
         map<string, WikiNode*> name_node_map;
 };
