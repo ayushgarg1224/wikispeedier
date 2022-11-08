@@ -4,16 +4,13 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
-#define ARTICLES "../dataset/articles.tsv"
-#define LINKS "../dataset/links.tsv"
+
 #define NUM_ARTICLES 4604
 #define NUM_LINKS 119882
 
 using namespace std;
 
-Graph::Graph(){
-    createGraphFromFile(ARTICLES, LINKS);
-}
+Graph::Graph(){}
 
 
 Graph::~Graph(){
@@ -21,7 +18,7 @@ Graph::~Graph(){
 }
 
 /*
- * Returns pointer to WikiNode based on article name.
+ * @brief Returns pointer to WikiNode based on article name.
  * @param page_name Name of the page to find.
  * @return Pointer to WikiNode corresponding to page_name or NULL if does not exist.
  */
@@ -44,7 +41,7 @@ void printProgress(int count, int total){
 }
 
 /*
- * Parses Wiki data to create graph.
+ * @brief Parses Wiki data to create graph.
  * @param articles_path Path to file containing graph data
  * @param links_path Path to file containing links data
  */
@@ -86,7 +83,7 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
 }
 
 /* 
- * Inserts a new node into the graph.
+ * @brief Inserts a new node into the graph.
  * @param node Pointer to node to be added
  */
 void Graph::addNode(WikiNode* node){

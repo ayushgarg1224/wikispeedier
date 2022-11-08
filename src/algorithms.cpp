@@ -9,7 +9,7 @@ using namespace std::chrono;
 Algorithm::Algorithm(Graph* graph) : graph(graph) {}
 
 /*
- * This function compares the three algorithms in terms of path size and runtime.
+ * @brief This function compares the three algorithms in terms of path size and runtime.
  * @param start Starting page
  * @param end Destination page
  * @return Vector of pairs where the first element is a path vector of WikiNode pointers and the second is the algorithm's runtime in seconds.
@@ -42,7 +42,7 @@ vector<pair<vector<WikiNode*>, double>> Algorithm::compareAlgs(WikiNode* start, 
 
 
 /*
- * This function determines the shortest path between two WikiNodes using Dijkstra's algorithm.
+ * @brief This function determines the shortest path between two WikiNodes using Dijkstra's algorithm.
  * @param start Starting page
  * @param end Destination page
  * @return Vector containing the order of pages to visit for the shortest path
@@ -52,7 +52,7 @@ vector<WikiNode*> Algorithm::getDijkstraPath(WikiNode* start, WikiNode* end){
 }
 
 /*
- * This function determines the shortest path between two WikiNodes using a Breadth First Search
+ * @brief This function determines the shortest path between two WikiNodes using a Breadth First Search
  * @param start Starting page
  * @param end Destination page
  * @return Vector containing the order of pages to visit for the shortest path
@@ -62,7 +62,7 @@ vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
 }
 
 /*
- * This function determines the shortest path between two WikiNodes using Iterative Deepening Depth-First Search
+ * @brief This function determines the shortest path between two WikiNodes using Iterative Deepening Depth-First Search
  * @param start Starting page
  * @param end Destination page
  * @return Vector containing the order of pages to visit for the shortest path

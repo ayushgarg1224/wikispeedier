@@ -13,6 +13,7 @@ WikiNode::~WikiNode(){
 }
 
 /*
+ * @brief Getter for an article's encoded name
  * @return Name of the article as stored in articles.tsv
  */
 string WikiNode::getName(){
@@ -20,7 +21,8 @@ string WikiNode::getName(){
 }
 
 /*
- * @return Name of the article parsed to look normal
+ * @brief Getter for an article's decoded name
+ * @return Name of the article after being parsed
  */
 string WikiNode::getNameParsed(){
     /*
@@ -33,7 +35,7 @@ string WikiNode::getNameParsed(){
 }
 
 /*
- * Getter for an article's links
+ * @brief Getter for an article's links
  * @return Vector containing pointers to linked articles
  */
 vector<WikiNode*> WikiNode::getLinks(){
@@ -41,7 +43,7 @@ vector<WikiNode*> WikiNode::getLinks(){
 }
 
 /*
- * Adds a directed link to another article
+ * @brief Adds a directed link to another article
  * @param other Node to establish connection to
  */
 void WikiNode::addConnection(WikiNode* other){
@@ -49,7 +51,7 @@ void WikiNode::addConnection(WikiNode* other){
 }
 
 /*
- * Checks whether or not this article is linked to another one
+ * @brief Checks whether or not this article is linked to another one
  * @param name Name of the potentially linked article
  * @return true if there is a link, false if there isn't
  */
@@ -61,7 +63,7 @@ bool WikiNode::isLinkedTo(string name){
 }
 
 /*
- * Checks whether or not this article is linked to another one
+ * @brief Checks whether or not this article is linked to another one
  * @param other Potentially linked WikiNode
  * @return true if there is a link, false if there isn't
  */
