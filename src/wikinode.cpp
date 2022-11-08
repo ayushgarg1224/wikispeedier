@@ -40,6 +40,7 @@ vector<WikiNode*> WikiNode::getLinks(){
 
 /*
  * Adds a directed link to another article
+ * @param other Node to establish connection to
  */
 void WikiNode::addConnection(WikiNode* other){
     links.push_back(other);
