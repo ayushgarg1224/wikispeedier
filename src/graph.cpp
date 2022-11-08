@@ -2,8 +2,14 @@
 #include "wikinode.h"
 #include <string>
 #include <fstream>
+#include <iostream>
+#include <iomanip>
 #define ARTICLES "../dataset/articles.tsv"
 #define LINKS "../dataset/links.tsv"
+#define NUM_ARTICLES 4604
+#define NUM_LINKS 119882
+
+using namespace std;
 
 Graph::Graph(){
     createGraphFromFile(ARTICLES, LINKS);
@@ -24,6 +30,19 @@ WikiNode* Graph::getPage(string page_name){
     return (it != name_node_map.end()) ? it->second : NULL;
 }
 
+void printProgress(int count, int total){
+    cout << setprecision(2);
+    int percent = 100*(float)count/total;
+    cout << "\r[";
+    for(int i = 0; i < 100; i++){
+        if(i < percent) 
+            cout << "#";
+        else
+            cout << " ";
+    }
+    cout << "]" << percent << "%";
+}
+
 /*
  * Parses Wiki data to create graph.
  * @param articles_path Path to file containing graph data
@@ -42,21 +61,28 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
     - For each link in links.tsv, addLink() to current WikiNode
     - Call addNode() on graph to insert node
      */
-
     ifstream articles(articles_path), links(links_path);
     string name, line, linked;
 
     /* Add nodes for each article (no links yet) */
-    while(getline(articles, name))
+    cout << "\n-----LOADING ARTICLES-----" << endl;
+    int count = 1;
+    while(getline(articles, name)){
         addNode(new WikiNode(name));
-
-    /* Go through link lines (article + spaces + linked article)*/
-    while(getline(links, line)){
-        name = line.substr(0, line.find(' '));                  //up to spaces is the article name
-        linked = line.substr(name.find_last_of(' ') + 1);       //past the spaces is the linked article
-        getPage(name)->addConnection(getPage(linked));          //add a link from "name" to "linked"
+        printProgress(count++, NUM_ARTICLES);
     }
 
+    /* Go through link lines (article + spaces + linked article)*/
+    cout << "\n-----LOADING LINKS-----" << endl;
+    count = 0;
+
+    while(getline(links, line)){
+        name = line.substr(0, line.find('	'));        //up to tab is the article name
+        linked = line.substr(line.find('	') + 1);    //past the tab is the linked article
+        getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"
+        printProgress(count++, NUM_LINKS);
+    }
+    cout << "\n-----DONE-----" << endl;
 }
 
 /* 

@@ -48,7 +48,7 @@ vector<pair<vector<WikiNode*>, double>> Algorithm::compareAlgs(WikiNode* start, 
  * @return Vector containing the order of pages to visit for the shortest path
  */
 vector<WikiNode*> Algorithm::getDijkstraPath(WikiNode* start, WikiNode* end){
-
+    return vector<WikiNode*>();
 }
 
 /*
@@ -58,7 +58,7 @@ vector<WikiNode*> Algorithm::getDijkstraPath(WikiNode* start, WikiNode* end){
  * @return Vector containing the order of pages to visit for the shortest path
  */
 vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
-
+    return vector<WikiNode*>();
 }
 
 /*
@@ -68,5 +68,5 @@ vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
  * @return Vector containing the order of pages to visit for the shortest path
  */
 vector<WikiNode*> Algorithm::getIDDFSPath(WikiNode* start, WikiNode* end){
-
+    return vector<WikiNode*>();
 }

@@ -28,6 +28,8 @@ string WikiNode::getNameParsed(){
     https://docs.oracle.com/javase/7/docs/api/java/net/URLDecoder.html
     We can just implement this ourselves and it shouldn't be too bad.
     */
+   //TODO
+   return page_name;
 }
 
 /*
