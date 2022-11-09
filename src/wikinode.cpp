@@ -15,18 +15,12 @@ WikiNode::~WikiNode(){
     /* TODO bc i don't like dealing with memory leaks */
 }
 
-/*
- * @brief Getter for an article's encoded name
- * @return Name of the article as stored in articles.tsv
- */
 string WikiNode::getName(){
     return page_name;
 }
 
-/*
- * @brief Getter for an article's decoded name
- * @return Name of the article after being parsed
- */
+/// @brief Getter for an article's decoded name
+/// @return Name of the article after being parsed
 string WikiNode::getNameParsed(){
     /*
     Dataset says to use URLDecorder (Java) to decode article names.
@@ -37,40 +31,40 @@ string WikiNode::getNameParsed(){
    return page_name;
 }
 
-/*
- * @brief Getter for an article's links
- * @return Vector containing pointers to linked articles
- */
+/// @brief Getter for an article's links
+/// @return Vector containing pointers to linked articles
 vector<WikiNode*> WikiNode::getLinks(){ return links; }
 
+
+
+/// @brief Getter for articles that link to this article
+/// @return Vector containing pointers to parent articles
 vector<WikiNode*> WikiNode::getLinkedBy(){ return linked_by; }
 
+/* Misc getters/setters */
 int WikiNode::getDepth(){ return depth; }
 bool WikiNode::isVisited(){ return visited; }
-
 void WikiNode::setDepth(int d){ depth = d; }
 void WikiNode::visit(){ visited = true; }
 void WikiNode::unvisit(){ visited = false; }
 
+
+/// @brief Util function to print the names of the linked articles
 void WikiNode::printLinks(){
     for(auto& link : links)
         cout << "   " << link->getNameParsed() << ": " << link->depth << endl;
 }
 
-/*
- * @brief Adds a directed link to another article
- * @param other Node to establish connection to
- */
+/// @brief Adds a directed link to another article
+/// @param other Node to establish connection to
 void WikiNode::addConnection(WikiNode* other){
     links.push_back(other);
     other->linked_by.push_back(this);
 }
 
-/*
- * @brief Checks whether or not this article is linked to another one
- * @param name Name of the potentially linked article
- * @return true if there is a link, false if there isn't
- */
+/// @brief Checks whether or not this article is linked to another one
+/// @param name Name of the potentially linked article
+/// @return true if there is a link, false if there isn't
 bool WikiNode::isLinkedTo(string name){
     for(auto& link : links)
         if(!link->getName().compare(name))
@@ -78,11 +72,9 @@ bool WikiNode::isLinkedTo(string name){
     return false;
 }
 
-/*
- * @brief Checks whether or not this article is linked to another one
- * @param other Potentially linked WikiNode
- * @return true if there is a link, false if there isn't
- */
+/// @brief Checks whether or not this article is linked to another one
+/// @param other Potentially linked WikiNode
+/// @return true if there is a link, false if there isn't
 bool WikiNode::isLinkedTo(WikiNode* other){
     for(auto& link : links)
         if(link == other)

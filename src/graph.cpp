@@ -26,6 +26,9 @@ WikiNode* Graph::getPage(string page_name){
     return (it != name_node_map.end()) ? it->second : NULL;
 }
 
+/// @brief Util function for printing a progress bar
+/// @param count Current count out of total elements
+/// @param total Total number of elements
 void printProgress(int count, int total){
     cout << setprecision(2);
     int percent = 100*(float)count/total;
@@ -39,6 +42,9 @@ void printProgress(int count, int total){
     cout << "]" << percent << "%";
 }
 
+
+/// @brief Returns a pointer to a random WikiNode. Takes 1 second to prevent duplicates
+/// @return Pointer to a random WikiNode
 WikiNode* Graph::getRandomPage(){
     sleep(1);                    //ensure at least 1 second has passed since the last call so you don't get duplicates
     srand((unsigned) time(NULL));
@@ -49,11 +55,9 @@ WikiNode* Graph::getRandomPage(){
     return name_node_map.begin()->second;
 }
 
-/*
- * @brief Parses Wiki data to create graph.
- * @param articles_path Path to file containing graph data
- * @param links_path Path to file containing links data
- */
+/// @brief Populates the graph object from given dataset files
+/// @param articles_path Path to file containing graph data
+/// @param links_path Path to file containing links data
 void Graph::createGraphFromFile(string articles_path, string links_path){
     /* 
     Parses through and create WikiNodes. Add these via pointer to the map.
@@ -91,10 +95,8 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
     cout << "\n-----DONE-----" << endl;
 }
 
-/* 
- * @brief Inserts a new node into the graph.
- * @param node Pointer to node to be added
- */
+/// @brief Inserts a new node into the graph.
+/// @param node Pointer to node to be added
 void Graph::addNode(WikiNode* node){
     name_node_map.insert({node->getName(), node});
 }
