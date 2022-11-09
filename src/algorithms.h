@@ -14,6 +14,7 @@ class Algorithm {
         vector<WikiNode*> getDijkstraPath(WikiNode* start, WikiNode* end);
         vector<WikiNode*> getBFSPath(WikiNode* start, WikiNode* end);
         vector<WikiNode*> getIDDFSPath(WikiNode* start, WikiNode* end);
+        void printPath(vector<WikiNode*> path);
     private:
         Graph* graph;
 };

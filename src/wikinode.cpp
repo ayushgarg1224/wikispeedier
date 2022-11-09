@@ -1,12 +1,15 @@
+#include "wikinode.h"
 #include <string>
 #include <vector>
-#include "wikinode.h"
+#include <iostream>
+#define NUM_ARTICLES 4604
 
 using namespace std;
 
-WikiNode::WikiNode() : page_name(""), links() {}
 
-WikiNode::WikiNode(string name) : page_name(name) {}
+WikiNode::WikiNode() : page_name(""), links(), visited(false), depth(NUM_ARTICLES+1) {}
+
+WikiNode::WikiNode(string name) : page_name(name), visited(false), depth(NUM_ARTICLES+1) {}
 
 WikiNode::~WikiNode(){
     /* TODO bc i don't like dealing with memory leaks */
@@ -38,8 +41,20 @@ string WikiNode::getNameParsed(){
  * @brief Getter for an article's links
  * @return Vector containing pointers to linked articles
  */
-vector<WikiNode*> WikiNode::getLinks(){
-    return links;
+vector<WikiNode*> WikiNode::getLinks(){ return links; }
+
+vector<WikiNode*> WikiNode::getLinkedBy(){ return linked_by; }
+
+int WikiNode::getDepth(){ return depth; }
+bool WikiNode::isVisited(){ return visited; }
+
+void WikiNode::setDepth(int d){ depth = d; }
+void WikiNode::visit(){ visited = true; }
+void WikiNode::unvisit(){ visited = false; }
+
+void WikiNode::printLinks(){
+    for(auto& link : links)
+        cout << "   " << link->getNameParsed() << ": " << link->depth << endl;
 }
 
 /*
@@ -48,6 +63,7 @@ vector<WikiNode*> WikiNode::getLinks(){
  */
 void WikiNode::addConnection(WikiNode* other){
     links.push_back(other);
+    other->linked_by.push_back(this);
 }
 
 /*

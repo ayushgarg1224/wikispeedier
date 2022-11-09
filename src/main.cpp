@@ -10,8 +10,16 @@ using namespace std;
 int main(){
     Graph* graph = new Graph();
     graph->createGraphFromFile();
-    vector<WikiNode *> links = graph->getPage("%C3%85land")->getLinks();
-    for(auto& link : links)
-        cout << link->getName() << endl;
+    
+    Algorithm* alg = new Algorithm(graph);
+    WikiNode* start = graph->getRandomPage();
+    WikiNode* end = graph->getRandomPage();
+
+    cout << "Start: " << start->getName() << "\nEnd: " << end->getName() << endl;
+    vector<WikiNode*> path = alg->getBFSPath(start, end);
+    if(path.size() == 0)
+        cout << "Path could not be found" << endl;
+    else
+        alg->printPath(path);
     return 0;
 }

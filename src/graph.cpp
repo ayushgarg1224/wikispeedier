@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <iomanip>
+#include <unistd.h>
 
 #define NUM_ARTICLES 4604
 #define NUM_LINKS 119882
@@ -17,11 +18,9 @@ Graph::~Graph(){
     /* TODO bc memory ew */
 }
 
-/*
- * @brief Returns pointer to WikiNode based on article name.
- * @param page_name Name of the page to find.
- * @return Pointer to WikiNode corresponding to page_name or NULL if does not exist.
- */
+/// @brief Returns pointer to WikiNode based on article name.
+/// @param page_name Name of the page to find.
+/// @return Pointer to WikiNode corresponding to page_name or NULL if does not exist.
 WikiNode* Graph::getPage(string page_name){
     map<string, WikiNode*>::iterator it = name_node_map.find(page_name);
     return (it != name_node_map.end()) ? it->second : NULL;
@@ -38,6 +37,16 @@ void printProgress(int count, int total){
             cout << " ";
     }
     cout << "]" << percent << "%";
+}
+
+WikiNode* Graph::getRandomPage(){
+    sleep(1);                    //ensure at least 1 second has passed since the last call so you don't get duplicates
+    srand((unsigned) time(NULL));
+    int idx = rand()%NUM_ARTICLES;
+    for(auto it = name_node_map.begin(); it != name_node_map.end(); ++it)
+        if(idx-- == 0)
+            return it->second;
+    return name_node_map.begin()->second;
 }
 
 /*
