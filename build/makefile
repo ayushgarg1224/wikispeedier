@@ -1,5 +1,5 @@
 CC = g++
-CXXFLAGS = -Wall
+CXXFLAGS = -Wall -std=c++20
 OBJS = wikinode.o graph.o algorithms.o main.o
 SDIR = ../src/
 
@@ -21,4 +21,4 @@ algorithms.o: ${SDIR}algorithms.cpp ${SDIR}algorithms.h ${SDIR}wikinode.h ${SDIR
 clean:
 	rm -f main ${OBJS}
 
-# If make isn't working just run "g++ -Wall -o main ../src/main.cpp ../src/algorithms.cpp ../src/graph.cpp ../src/wikinode.cpp" from ./build
+# If make isn't working just run "g++ -Wall -std=c++20 -o main ../src/main.cpp ../src/algorithms.cpp ../src/graph.cpp ../src/wikinode.cpp" from ./build
