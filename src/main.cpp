@@ -20,11 +20,14 @@ int main(){
     vector<WikiNode*> pathDijkstra = alg->getDijkstraPath(start, end);
     if(path.size() == 0)
         cout << "Path could not be found" << endl;
-    else
+    else{
+        cout << "Printing BFS's Path:" << endl;
         alg->printPath(path);
+    }
     if (pathDijkstra.size() == 0) {
         cout << "Dijkstra path could not be found" << endl;
     } else {
+        cout << "Printing Dijkstra's Path:" << endl;
         alg->printPath(pathDijkstra);
     }
     return 0;
