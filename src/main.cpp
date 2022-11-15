@@ -17,9 +17,15 @@ int main(){
 
     cout << "Start: " << start->getName() << "\nEnd: " << end->getName() << endl;
     vector<WikiNode*> path = alg->getBFSPath(start, end);
+    vector<WikiNode*> pathDijkstra = alg->getDijkstraPath(start, end);
     if(path.size() == 0)
         cout << "Path could not be found" << endl;
     else
         alg->printPath(path);
+    if (pathDijkstra.size() == 0) {
+        cout << "Dijkstra path could not be found" << endl;
+    } else {
+        alg->printPath(pathDijkstra);
+    }
     return 0;
 }

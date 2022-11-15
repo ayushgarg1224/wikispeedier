@@ -59,13 +59,49 @@ void Algorithm::printPath(vector<WikiNode*> path){
     }
 }
 
-/// @brief This function determines the shortest path between two WikiNodes using Dijkstra's algorithm.
+/// @brief This function determines the shortest path between two WikiNodes
+/// using Dijkstra's algorithm.
 /// @param start start Starting page
 /// @param end end Destination page
 /// @return Vector containing the order of pages to visit for the shortest path
-vector<WikiNode*> Algorithm::getDijkstraPath(WikiNode* start, WikiNode* end){
-    return vector<WikiNode*>();
+vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end) {
+  typedef pair<int, WikiNode *> distPair;
+  priority_queue<distPair, vector<distPair>, greater<distPair>>
+      heap; // to shave time off lookup for the node with minimum distance
+  // pq.push(make_pair(10, 200));
+  map<WikiNode *, WikiNode *> childParent; // Maps wikinode:parent
+  vector<WikiNode *> path;                 // Path returned
+  // Initializing the heap with the source WikiNode pointer
+  heap.push(make_pair(0, start));
+  childParent[start] = NULL;
+  WikiNode *thisNode;
+  while (
+      heap.top().second != end &&
+      !heap.empty()) { // stop executing Dijkstra's when you reach the end node
+    distPair top = heap.top();
+    heap.pop();
+    thisNode = top.second;
+    for (auto &adjNode : thisNode->getLinks()) {
+      if (childParent.find(adjNode) == childParent.end()) {
+        childParent[adjNode] = thisNode; // Update the neighbors' parents
+        heap.push(
+            make_pair(top.first + 1, adjNode)); // Push current node to heap
+      }
+    }
+  }
+  if (heap.empty())
+    return vector<WikiNode *>();
+  // Backtracking parents
+  WikiNode *currNode = heap.top().second;
+  path.push_back(currNode);
+  while (childParent[currNode] != NULL) {
+    path.push_back(childParent[currNode]);
+    currNode = childParent[currNode];
+  }
+  reverse(path.begin(), path.end());
+  return path;
 }
+
 
 /// @brief This function determines the shortest path between two WikiNodes using a Breadth First Search
 /// @param start Starting page
