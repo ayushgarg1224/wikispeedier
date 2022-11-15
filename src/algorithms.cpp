@@ -82,7 +82,7 @@ vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end) {
       if (childParent.find(adjNode) == childParent.end() || distance < childParent[adjNode].first) {
         childParent[adjNode] = top; // Update the neighbors' parents
         heap.push(
-            make_pair(distance + 1 + (adjNode->getLinkedBy().size())/500.0, adjNode)); // Push current node to heap
+            make_pair(distance + 1 + (adjNode->getLinks().size())/500.0, adjNode)); // Push current node to heap
       }
     }
   }
