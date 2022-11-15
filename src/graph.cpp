@@ -5,11 +5,16 @@
 #include <iostream>
 #include <iomanip>
 #include <unistd.h>
+#include <filesystem>
+#include <string>
+#include <iostream>
 
 #define NUM_ARTICLES 4604
 #define NUM_LINKS 119882
 
 using namespace std;
+
+// using recursive_directory_iterator = filesystem::directory_iterator;
 
 Graph::Graph(){}
 
@@ -58,7 +63,7 @@ WikiNode* Graph::getRandomPage(){
 /// @brief Populates the graph object from given dataset files
 /// @param articles_path Path to file containing graph data
 /// @param links_path Path to file containing links data
-void Graph::createGraphFromFile(string articles_path, string links_path){
+void Graph::createGraphFromFile(string articles_path, string links_path, string plain_text){
     /* 
     Parses through and create WikiNodes. Add these via pointer to the map.
     Dataset says to use URLDecorder (Java) to decode article names.
@@ -73,7 +78,6 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
      */
     ifstream articles(articles_path), links(links_path);
     string name, line, linked;
-
     /* Add nodes for each article (no links yet) */
     cout << "\n-----LOADING ARTICLES-----" << endl;
     int count = 1;
@@ -92,6 +96,7 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
         getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"
         printProgress(count++, NUM_LINKS);
     }
+    
     cout << "\n-----DONE-----" << endl;
 }
 
