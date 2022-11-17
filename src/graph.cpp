@@ -82,6 +82,7 @@ void Graph::createGraphFromFile(string articles_path, string links_path, string 
     cout << "\n-----LOADING ARTICLES-----" << endl;
     int count = 1;
     while(getline(articles, name)){
+        name.pop_back();
         addNode(new WikiNode(name));
         printProgress(count++, NUM_ARTICLES);
     }
@@ -93,6 +94,7 @@ void Graph::createGraphFromFile(string articles_path, string links_path, string 
     while(getline(links, line)){
         name = line.substr(0, line.find('	'));        //up to tab is the article name
         linked = line.substr(line.find('	') + 1);    //past the tab is the linked article
+        linked.pop_back();
         getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"
         printProgress(count++, NUM_LINKS);
     }

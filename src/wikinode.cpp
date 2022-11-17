@@ -7,9 +7,9 @@
 using namespace std;
 
 
-WikiNode::WikiNode() : page_name(""), links(), visited(false), depth(NUM_ARTICLES+1) {}
+WikiNode::WikiNode() : page_name("") {}
 
-WikiNode::WikiNode(string name) : page_name(name), visited(false), depth(NUM_ARTICLES+1) {}
+WikiNode::WikiNode(string name) : page_name(name) {}
 
 WikiNode::~WikiNode(){
     /* TODO bc i don't like dealing with memory leaks */
@@ -36,30 +36,16 @@ string WikiNode::getNameParsed(){
 vector<WikiNode*> WikiNode::getLinks(){ return links; }
 
 
-
-/// @brief Getter for articles that link to this article
-/// @return Vector containing pointers to parent articles
-vector<WikiNode*> WikiNode::getLinkedBy(){ return linked_by; }
-
-/* Misc getters/setters */
-int WikiNode::getDepth(){ return depth; }
-bool WikiNode::isVisited(){ return visited; }
-void WikiNode::setDepth(int d){ depth = d; }
-void WikiNode::visit(){ visited = true; }
-void WikiNode::unvisit(){ visited = false; }
-
-
 /// @brief Util function to print the names of the linked articles
 void WikiNode::printLinks(){
     for(auto& link : links)
-        cout << "   " << link->getNameParsed() << ": " << link->depth << endl;
+        cout << "   " << link->getNameParsed() << endl;
 }
 
 /// @brief Adds a directed link to another article
 /// @param other Node to establish connection to
 void WikiNode::addConnection(WikiNode* other){
     links.push_back(other);
-    other->linked_by.push_back(this);
 }
 
 /// @brief Checks whether or not this article is linked to another one

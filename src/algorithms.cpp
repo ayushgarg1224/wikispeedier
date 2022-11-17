@@ -105,35 +105,32 @@ vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end) {
 /// @return Vector containing the order of pages to visit for the shortest path, empty if path cannot be found
 vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
     queue<WikiNode*> queue;
+    map<WikiNode*,WikiNode*> parents;
     vector<WikiNode*> curLinks;
     vector<WikiNode*> path;
 
-    WikiNode* curr;
-    int depth;
+    WikiNode* curr = start;
 
     /* Initialize queue with starting node */
-    start->visit();
-    start->setDepth(0);
-    queue.push(start);
+    parents.insert(std::pair<WikiNode*,WikiNode*>(curr, end));
+    queue.push(curr);
 
     while(!queue.empty()){
         /* Get current depth and pop curr */
         curr = queue.front();
-        depth = curr->getDepth();
         queue.pop();
         if(curr == end){                     //we have found the destination and assigned depths along the way
-            curr->setDepth(depth);
             break;
         }
 
         /* For each unvisited link from the current node, visit it and assign depth of current + 1 */
         curLinks = curr->getLinks();
-        for(auto& link : curLinks)
-            if(!link->isVisited()){
-                link->visit();
-                link->setDepth(depth + 1);
+        for(auto& link : curLinks) {
+            if(parents.find(link) == parents.end()) {
+                parents.insert(std::pair<WikiNode*,WikiNode*>(link, curr));
                 queue.push(link);
             }
+        }
     }
 
     /* Check to see if the end node was actually reached */
@@ -141,20 +138,11 @@ vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
         return vector<WikiNode*>();
 
     /* Backwards traversal via depth minimization */
-    depth = 0;
-    path.push_back(curr);
-    while(curr != start){
-        curLinks = curr->getLinkedBy();                 //vector of articles that link here
-        for(auto& link : curLinks){
-            if(link->getDepth() < curr->getDepth()){    //if a previous article was closer to the start, move there
-                link->visit();
-                curr = link;
-                path.push_back(link);
-                break;
-            }
-        }
-    }
-    reverse(path.begin(), path.end());
+    path.insert(path.begin(), curr);
+    do {
+        curr = parents[curr];
+        path.insert(path.begin(), curr);
+    } while (curr != start);
     return path;
 }
 
