@@ -20,6 +20,8 @@ class Graph{
         void createGraphFromFile(string articles_path = ARTICLES, string links_path = LINKS, string plain_text = PLAINTEXT);
 
         void addNode(WikiNode* node);
+        map<string, WikiNode*>& getMap();
+
     private:
         map<string, WikiNode*> name_node_map;
 };

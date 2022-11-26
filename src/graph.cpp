@@ -31,6 +31,10 @@ WikiNode* Graph::getPage(string page_name){
     return (it != name_node_map.end()) ? it->second : NULL;
 }
 
+map<string, WikiNode*>& Graph::getMap(){
+    return name_node_map;
+}
+
 /// @brief Util function for printing a progress bar
 /// @param count Current count out of total elements
 /// @param total Total number of elements

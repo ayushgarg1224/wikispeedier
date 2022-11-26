@@ -1,12 +1,12 @@
 CC = g++
 CXXFLAGS = -Wall -std=c++20
-OBJS = wikinode.o graph.o algorithms.o main.o
+OBJS = wikinode.o graph.o algorithms.o tests.o main.o
 SDIR = ../src/
 
 main: ${OBJS}
 	${CC} ${CXXFLAGS} -o main ${OBJS}
 
-main.o: ${SDIR}main.cpp ${SDIR}graph.h ${SDIR}wikinode.h ${SDIR}algorithms.h
+main.o: ${SDIR}main.cpp ${SDIR}tests.h ${SDIR}graph.h ${SDIR}wikinode.h ${SDIR}algorithms.h
 	${CC} ${CXXFLAGS} -c ${SDIR}main.cpp 
 
 graph.o: ${SDIR}graph.cpp ${SDIR}graph.h ${SDIR}wikinode.h
@@ -17,6 +17,9 @@ wikinode.o: ${SDIR}wikinode.cpp ${SDIR}wikinode.h
 
 algorithms.o: ${SDIR}algorithms.cpp ${SDIR}algorithms.h ${SDIR}wikinode.h ${SDIR}graph.h
 	${CC} ${CXXFLAGS} -c ${SDIR}algorithms.cpp
+
+tests.o: ${SDIR}tests.cpp ${SDIR}tests.h ${SDIR}algorithms.h ${SDIR}wikinode.h ${SDIR}graph.h
+	${CC} ${CXXFLAGS} -c ${SDIR}tests.cpp
 
 clean:
 	rm -f main ${OBJS}

@@ -1,6 +1,7 @@
 #include "graph.h"
 #include "wikinode.h"
 #include "algorithms.h"
+#include "tests.h"
 #include <iostream>
 #include <vector>
 
@@ -30,5 +31,7 @@ int main(){
         cout << "Printing Dijkstra's Path:" << endl;
         alg->printPath(pathDijkstra);
     }
+    // Tests* tester = new Tests();
+    // tester->runAllTests();
     return 0;
 }
