@@ -70,7 +70,7 @@ WikiNode* Graph::getRandomPage(){
 /// @brief Populates the graph object from given dataset files
 /// @param articles_path Path to file containing graph data
 /// @param links_path Path to file containing links data
-void Graph::createGraphFromFile(string articles_path, string links_path, string plain_text){
+void Graph::createGraphFromFile(string articles_path, string links_path){
     /* 
     Parses through and create WikiNodes. Add these via pointer to the map.
     Dataset says to use URLDecorder (Java) to decode article names.
@@ -89,7 +89,8 @@ void Graph::createGraphFromFile(string articles_path, string links_path, string 
     cout << "\n-----LOADING ARTICLES-----" << endl;
     int count = 1;
     while(getline(articles, name)){
-        name.pop_back();
+        string test1 = "tests"; string test2 = "\ntests";
+        if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         addNode(new WikiNode(name));
         printProgress(count++, NUM_ARTICLES);
     }
@@ -101,7 +102,8 @@ void Graph::createGraphFromFile(string articles_path, string links_path, string 
     while(getline(links, line)){
         name = line.substr(0, line.find('	'));        //up to tab is the article name
         linked = line.substr(line.find('	') + 1);    //past the tab is the linked article
-        linked.pop_back();
+        string test1 = "tests"; string test2 = "\ntests"; 
+        if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"
         printProgress(count++, NUM_LINKS);
     }

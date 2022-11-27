@@ -31,8 +31,8 @@ int main(){
         cout << "Printing Dijkstra's Path:" << endl;
         alg->printPath(pathDijkstra);
     }
-    // Tests* tester = new Tests();
-    // tester->runAllTests();
-    delete graph; delete alg; 
+    Tests* tester = new Tests();
+    tester->runAllTests();
+    delete graph; delete alg; delete tester;
     return 0;
 }

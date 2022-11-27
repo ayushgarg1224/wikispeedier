@@ -16,7 +16,6 @@
 void Tests::testGraphSize(){
     Graph* graph = new Graph();
     graph->createGraphFromFile();
-    std::cout << "HERE" << std::endl;
     assert(graph->getMap().size() == NUM_ARTICLES);
     delete graph;
 }
