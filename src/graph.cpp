@@ -18,12 +18,10 @@ using namespace std;
 
 Graph::Graph(){}
 
-
+/* NOTE: Deleting a graph will delete all node objects so do not delete individual nodes after deleting the graph */
 Graph::~Graph(){
-    /* TODO bc memory ew */
-    for(auto& pair: name_node_map){
+    for(auto& pair: name_node_map)
         delete pair.second;
-    }
 }
 
 /// @brief Returns pointer to WikiNode based on article name.
@@ -70,7 +68,7 @@ WikiNode* Graph::getRandomPage(){
 /// @brief Populates the graph object from given dataset files
 /// @param articles_path Path to file containing graph data
 /// @param links_path Path to file containing links data
-void Graph::createGraphFromFile(string articles_path, string links_path){
+void Graph::createGraphFromFile(string articles_path, string links_path, bool print_progress){
     /* 
     Parses through and create WikiNodes. Add these via pointer to the map.
     Dataset says to use URLDecorder (Java) to decode article names.
@@ -86,17 +84,19 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
     ifstream articles(articles_path), links(links_path);
     string name, line, linked;
     /* Add nodes for each article (no links yet) */
-    cout << "\n-----LOADING ARTICLES-----" << endl;
+    if(print_progress) cout << "\n-----LOADING ARTICLES-----" << endl;
     int count = 1;
     while(getline(articles, name)){
         string test1 = "tests"; string test2 = "\ntests";
         if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         addNode(new WikiNode(name));
-        printProgress(count++, NUM_ARTICLES);
+
+        if(print_progress)
+            printProgress(count++, NUM_ARTICLES);
     }
 
     /* Go through link lines (article + spaces + linked article)*/
-    cout << "\n-----LOADING LINKS-----" << endl;
+    if(print_progress) cout << "\n-----LOADING LINKS-----" << endl;
     count = 0;
 
     while(getline(links, line)){
@@ -105,10 +105,12 @@ void Graph::createGraphFromFile(string articles_path, string links_path){
         string test1 = "tests"; string test2 = "\ntests"; 
         if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"
-        printProgress(count++, NUM_LINKS);
+
+        if(print_progress)
+            printProgress(count++, NUM_LINKS);
     }
     
-    cout << "\n-----DONE-----" << endl;
+    if(print_progress) cout << "\n-----DONE-----" << endl;
 }
 
 /// @brief Inserts a new node into the graph.
