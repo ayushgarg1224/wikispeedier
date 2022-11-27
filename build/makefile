@@ -8,7 +8,7 @@ TDIR = ../tests/
 main: ${OBJS}
 	${CC} ${CXXFLAGS} -o main ${OBJS}
 
-tests: ${TEST_OBJS}
+test: ${TEST_OBJS}
 	${CC} ${CXXFLAGS} -o test ${TEST_OBJS}
 
 main.o: ${SDIR}main.cpp ${SDIR}graph.h ${SDIR}wikinode.h ${SDIR}algorithms.h
