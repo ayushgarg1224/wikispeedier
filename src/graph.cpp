@@ -21,6 +21,9 @@ Graph::Graph(){}
 
 Graph::~Graph(){
     /* TODO bc memory ew */
+    for(auto& pair: name_node_map){
+        delete pair.second;
+    }
 }
 
 /// @brief Returns pointer to WikiNode based on article name.

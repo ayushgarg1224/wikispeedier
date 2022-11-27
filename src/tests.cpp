@@ -18,6 +18,7 @@ void Tests::testGraphSize(){
     graph->createGraphFromFile();
     std::cout << "HERE" << std::endl;
     assert(graph->getMap().size() == NUM_ARTICLES);
+    delete graph;
 }
 
 void Tests::testLinks(){
@@ -28,6 +29,7 @@ void Tests::testLinks(){
     assert(!links[0]->getName().compare("B"));
     assert(!links[1]->getName().compare("C"));
     assert(!links[2]->getName().compare("D"));
+    delete graph;
 }
 
 void Tests::testAddNode(){
@@ -35,6 +37,7 @@ void Tests::testAddNode(){
     WikiNode* node = new WikiNode("random_name!@#$%^&*(");
     graph->addNode(node);
     assert(!graph->getPage("random_name!@#$%^&*(")->getName().compare(node->getName()));
+    delete graph; delete node; 
 }
 
 
@@ -48,6 +51,7 @@ void Tests::testIsLinkedTo(){
 
     assert(A->isLinkedTo(B));
     assert(A->isLinkedTo("B"));
+    delete A; delete B;
 }
 
 void Tests::testGetLinks(){
@@ -61,6 +65,7 @@ void Tests::testGetLinks(){
 
     assert(links[0] == B);
     assert(links[1] == C);
+    delete A; delete B; delete C;
 }
 
 /* BFS TESTS */
@@ -76,6 +81,7 @@ void Tests::testValidPath(){
 
     assert(!path[0] ->getName().compare("H"));
     assert(!path[path.size()-1] ->getName().compare("E"));
+    delete graph; delete alg; 
 }
 
 void Tests::testImpossiblePath(){
@@ -87,6 +93,7 @@ void Tests::testImpossiblePath(){
     Algorithm* alg = new Algorithm(graph);
     vector<WikiNode*> path = alg->getBFSPath(start, end);
     assert(path.size() == 0);
+    delete graph; delete alg;
 }
 
 void Tests::testEqualPathsBFS(){
@@ -99,6 +106,7 @@ void Tests::testEqualPathsBFS(){
     vector<WikiNode*> path = alg->getBFSPath(start, end);
     assert(!path[1]->getName().compare("A"));
     assert(!path[2]->getName().compare("B"));
+    delete graph; delete alg;
 }
 
 /* MAIN TEST FUNCTION */

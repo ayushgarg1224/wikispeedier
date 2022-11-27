@@ -33,5 +33,6 @@ int main(){
     }
     // Tests* tester = new Tests();
     // tester->runAllTests();
+    delete graph; delete alg; 
     return 0;
 }
