@@ -13,10 +13,8 @@ class Algorithm {
         vector<pair<vector<WikiNode*>, double>> compareAlgs(WikiNode* start, WikiNode* end);
         vector<WikiNode*> getDijkstraPath(WikiNode* start, WikiNode* end);
         vector<WikiNode*> getBFSPath(WikiNode* start, WikiNode* end);
-        vector<WikiNode*> getIDDFSPath(WikiNode* start, WikiNode* end);
-        vector<WikiNode*> getIDDFSPath(WikiNode* start, WikiNode* end, int max_depth);
-        vector<WikiNode*> getIDDFSPathVisited(WikiNode* start, WikiNode* end);
-        vector<WikiNode*> getIDDFSPathVisited(WikiNode* start, WikiNode* end, int max_depth);
+        vector<WikiNode*> getIDDFSPath(WikiNode* start, WikiNode* end, int max_depth = 5);
+        vector<WikiNode*> getIDDFSPathVisited(WikiNode* start, WikiNode* end, int max_depth = 5);
         void printPath(vector<WikiNode*> path);
     private:
         vector<WikiNode*> getDLSPath(WikiNode* start, WikiNode* end, int depth);

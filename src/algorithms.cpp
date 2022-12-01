@@ -162,14 +162,6 @@ vector<WikiNode*> Algorithm::getIDDFSPath(WikiNode* start, WikiNode* end, int ma
     return result;
 }
 
-/// @brief This function determines the shortest path of max depth between two WikiNodes using Iterative Deepening Depth-First Search; no visited
-/// @param start Starting page
-/// @param end Destination page
-/// @return Vector containing the order of pages to visit for the shortest path
-vector<WikiNode*> Algorithm::getIDDFSPath(WikiNode* start, WikiNode* end) {
-    return getIDDFSPath(start, end, 5);
-}
-
 /// @brief Helper function for IDDFS. This function determines the shortest path between two WikiNodes using a depth-limited Depth-First Search.
 /// @param start Starting page
 /// @param end Destination page
@@ -209,14 +201,6 @@ vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end,
         cout << "IDDFS_Visited at depth: " << currDepth << endl;
     } while (result.empty() && currDepth < max_depth); // while not done
     return result;
-}
-
-/// @brief This function determines the shortest path of max depth between two WikiNodes using Iterative Deepening Depth-First Search; no visited
-/// @param start Starting page
-/// @param end Destination page
-/// @return Vector containing the order of pages to visit for the shortest path
-vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end) {
-    return getIDDFSPathVisited(start, end, 5);
 }
 
 /// @brief Helper function for IDDFS. This function determines the shortest path between two WikiNodes using a depth-limited Depth-First Search.
