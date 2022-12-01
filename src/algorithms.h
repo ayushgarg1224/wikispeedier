@@ -14,7 +14,12 @@ class Algorithm {
         vector<WikiNode*> getDijkstraPath(WikiNode* start, WikiNode* end);
         vector<WikiNode*> getBFSPath(WikiNode* start, WikiNode* end);
         vector<WikiNode*> getIDDFSPath(WikiNode* start, WikiNode* end);
+        vector<WikiNode*> getIDDFSPath(WikiNode* start, WikiNode* end, int max_depth);
+        vector<WikiNode*> getIDDFSPathVisited(WikiNode* start, WikiNode* end);
+        vector<WikiNode*> getIDDFSPathVisited(WikiNode* start, WikiNode* end, int max_depth);
         void printPath(vector<WikiNode*> path);
     private:
+        vector<WikiNode*> getDLSPath(WikiNode* start, WikiNode* end, int depth);
+        vector<WikiNode*> getDLSPathVisited(WikiNode* start, WikiNode* end, int depth, vector<WikiNode*>* visited);
         Graph* graph;
 };
