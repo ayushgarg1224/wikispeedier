@@ -18,6 +18,6 @@ class Algorithm {
         void printPath(vector<WikiNode*> path);
     private:
         vector<WikiNode*> getDLSPath(WikiNode* start, WikiNode* end, int depth);
-        vector<WikiNode*> getDLSPathVisited(WikiNode* start, WikiNode* end, int depth, vector<WikiNode*>* visited);
+        vector<WikiNode*> getDLSPathVisited(WikiNode* start, WikiNode* end, int depth, map<WikiNode*, int>* visited);
         Graph* graph;
 };

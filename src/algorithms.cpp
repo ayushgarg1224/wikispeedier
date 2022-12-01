@@ -194,9 +194,10 @@ vector<WikiNode*> Algorithm::getDLSPath(WikiNode* start, WikiNode* end, int dept
 vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end, int max_depth) {
     int currDepth = 0;
     vector<WikiNode*> result;
-    vector<WikiNode*>* visited = new vector<WikiNode*>(1, start);
+    map<WikiNode*, int>* visited = new map<WikiNode*, int>();
     do {
         result = getDLSPathVisited(start, end, currDepth, visited);
+        visited->clear();
         ++currDepth;
         cout << "IDDFS_Visited at depth: " << currDepth << endl;
     } while (result.empty() && currDepth < max_depth); // while not done
@@ -209,13 +210,13 @@ vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end,
 /// @param depth depth to check for end from
 /// @param visited pointer to vector of all nodes visited from most recently visited to least recently visited
 /// @return Pair containing vector of steps and bool if done (found end or none remaining)
-vector<WikiNode*> Algorithm::getDLSPathVisited(WikiNode* start, WikiNode* end, int depth, vector<WikiNode*>* visited) {
+vector<WikiNode*> Algorithm::getDLSPathVisited(WikiNode* start, WikiNode* end, int depth, map<WikiNode*, int>* visited) {
     if (depth == 0) {
         return (start == end) ? vector<WikiNode*>(1, start) : vector<WikiNode*>();
     } else {
         for (WikiNode* child : start->getLinks()) {
-            if (std::find(visited->begin(), visited->end(), end) == visited->end()) { // if have not visited
-                visited->insert(visited->begin(), child);
+            if (!visited->count(child) || visited->at(child) <= depth) { // if have not visited or have not visited at current or lower depth
+                visited->emplace(child, depth);
                 vector<WikiNode*> result = getDLSPathVisited(child, end, depth -1, visited);
                 if (!result.empty()) { // if result not empty (path exists)
                     result.insert(result.begin(), start);
