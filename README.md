@@ -2,16 +2,6 @@
 A project by Ethan Greenwald, Nathaniel Dyer, Ayush Garg, and Nitya Sunkad.
 UIUC CS 225 | Fall 2022.
 
-- [Wikispeedier: Speedier than Wikispeedia](#wikispeedier-speedier-than-wikispeedia)
-  - [Overview](#overview)
-  - [Algorithms](#algorithms)
-        - [**Breadth First Search (BFS)**](#breadth-first-search-bfs)
-        - [**Dijkstra's Algorithm**](#dijkstras-algorithm)
-        - [**Iterative Deepening Depth First Search (IDDFS)**](#iterative-deepening-depth-first-search-iddfs)
-  - [Running the Program](#running-the-program)
-        - [Main](#main)
-        - [Testing](#testing)
-
 ## Overview
 This project is based on the game Wikispeedia, an web game where players attempt to get from one Wikipedia article to another exclusively through clicking links. Our project is designed to determine the shortest path between any two articles. This utilizes the Wikispeedia navigation paths dataset provided by SNAP. We have implemented three different algorithms to achieve this, each of which is described in detail below.
 
