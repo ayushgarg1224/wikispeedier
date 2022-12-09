@@ -19,16 +19,35 @@ string WikiNode::getName(){
     return page_name;
 }
 
+/// @brief Helper function to replace encoded characters with their unicode equivalent
+/// @param value String to be decoded
+/// @return Decoded string
+string UrlDecode(const string& value)
+{
+    string result;
+    result.reserve(value.size());
+    
+    for (size_t i = 0; i < value.size(); ++i){
+        auto ch = value[i];
+        
+        if (ch == '%' && (i + 2) < value.size()){
+            auto hex = value.substr(i + 1, 2);
+            auto dec = static_cast<char>(std::strtol(hex.c_str(), nullptr, 16));
+            result.push_back(dec);
+            i += 2;
+        }
+        else if (ch == '_')
+            result.push_back(' ');
+        else
+            result.push_back(ch);
+    }
+    return result;
+}
+
 /// @brief Getter for an article's decoded name
 /// @return Name of the article after being parsed
 string WikiNode::getNameParsed(){
-    /*
-    Dataset says to use URLDecorder (Java) to decode article names.
-    https://docs.oracle.com/javase/7/docs/api/java/net/URLDecoder.html
-    We can just implement this ourselves and it shouldn't be too bad.
-    */
-   //TODO
-   return page_name;
+   return UrlDecode(page_name);
 }
 
 /// @brief Getter for an article's links

@@ -58,9 +58,9 @@ void Algorithm::printPath(vector<WikiNode*> path){
     for(int i = 0; i < (int)path.size(); i++){
         node = path[i];
         if(i != (int)path.size()-1)
-            cout << node->getName() << " -> ";
+            cout << node->getNameParsed() << " -> ";
         else
-            cout << node->getName() << endl;
+            cout << node->getNameParsed() << endl;
     }
 }
 
