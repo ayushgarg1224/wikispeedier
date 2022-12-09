@@ -13,13 +13,13 @@ Dijkstra's Algorithm is one of the most common algorithms used in finding the sh
 ##### **Iterative Deepening Depth First Search (IDDFS)**
 IDDFS combines the speed efficiency of BFS and the space efficiency of DFS. In IDDFS we implement a depth first search for a controlled depth, and we recursively call the DFS for incremented depth till you find the end node where you return the path or reach a maximum depth where you return an empty vector. We implement two different types of IDDFS, one where we keep track of visited nodes for a particular depth and one where we don't. Although, the algorithm where we keep track of the visited node tends to be relatively slower, it helps us avoid cycles in the given graph and from exploring repeated paths if they exist. The idea of maintainig a visited map to avoid cycles was something we discovered on our own during the development stage.
 ## Location of deliverables
-All of our source code is present in the folder titled "src". Within src, algorithms.cpp and algorithms.h consist of the implementation for all of the three data traversing algorithms; graph.cpp and graph.h contain our data parsing code; main.cpp is where we put together our whole project and call all of our functions and display the output on the screen; wikinode.h and wikinode.cpp includes implementation for the nodes on the graph.
-Our test cases are stored in the folder titled "tests" within the tests.cpp file.
-Our dataset is stored within the folder titled "dataset".
-Our makefile is stored in the foler titled "build".
-Our final presentation is the video titled "225_final_project.mp4"
-Our final written report is the file titled "written-report.md"
-Our team contract and team proposal are the files "team-contract.md" and "team-proposal.md"
+* All of our source code is present in the folder titled "src". Within src, algorithms.cpp and algorithms.h consist of the implementation for all of the three data traversing algorithms; graph.cpp and graph.h contain our data parsing code; main.cpp is where we put together our whole project and call all of our functions and display the output on the screen; wikinode.h and wikinode.cpp includes implementation for the nodes on the graph.
+* Our test cases are stored in the folder titled "tests" within the tests.cpp file.
+* Our dataset is stored within the folder titled "dataset".
+* Our makefile is stored in the foler titled "build".
+* Our final presentation is the video titled "225_final_project.mp4"
+* Our final written report is the file titled "written-report.md"
+* Our team contract and team proposal are the files "team-contract.md" and "team-proposal.md"
 ## Running the Program
 ##### Main
 To run this program, install make and g++, then clone the repository and navigate to `./wikispeedier/build/`. From here, running `make main` will create `main.exe`. In the same directoy, call `./main` to run the program on the default dataset. If you wish to use custom articles and links, create a tsv for each. The articles tsv should just have the article names on each line. The links tsv should have the article and linked article separated by a tab on each line. Once these are created, run `./main <articles_path> <links_path> <article_count> <links_count>` to run the program. Article_count and links_count are the total lines in each tsv respectively.
