@@ -71,28 +71,41 @@ void Algorithm::printPath(vector<WikiNode*> path){
 /// @return Vector containing the order of pages to visit for the shortest path
 vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end, float weight) {
   typedef pair<float, WikiNode *> distPair;
-  priority_queue<distPair, vector<distPair>, greater<distPair>> heap; // to shave time off lookup for the node with minimum distance
-  map<WikiNode *, pair<float,WikiNode *>> childParent; // Maps wikinode:pair<parent, distance to parent>
-  vector<WikiNode *> path;                 // Path returned
-  // Initializing the heap with the source WikiNode pointer
+
+  /* Min heap to shave time off lookup for the node with minimum distance */
+  priority_queue<distPair, vector<distPair>, greater<distPair>> heap; 
+
+  /* Maps WikiNode:pair<parent, distance to parent> */
+  map<WikiNode *, pair<float,WikiNode *>> childParent;
+  vector<WikiNode *> path; 
+
+  /* Initializing the heap with the source WikiNode pointer */
   heap.push(make_pair(0, start));
   childParent[start] = make_pair(0, nullptr);
-  while (heap.top().second != end && !heap.empty()) { // stop executing Dijkstra's when you reach the end node
+
+  /* Execute Dijkstra's until you reach the destination node */
+  while (heap.top().second != end && !heap.empty()) {
     distPair top = heap.top();
     heap.pop();
     WikiNode *thisNode = top.second;
     int distance = top.first;
     for (auto &adjNode : thisNode->getLinks()) {
-    //if adjacent node hasn't already been visited or if the page rank leading up to the adjacent node is less than the page rank that we have via the current path, replace the adjacent node's parent in the heap and the dicitonary
+
+    /* If adjacent node hasn't already been visited or if the page rank leading up to the adjacent node is less than the page rank that we have via the current path, replace the adjacent node's parent in the heap and the dictionary */
       if (childParent.find(adjNode) == childParent.end() || distance < childParent[adjNode].first) {
-        childParent[adjNode] = top; // Update the neighbors' parents
+
+        /* Update the neighbors' parents */
+        childParent[adjNode] = top; 
         heap.push(
-            make_pair(distance + 1 + (adjNode->getLinks().size())/weight, adjNode)); // Push current node to heap
+
+            /* Push current node to heap */
+            make_pair(distance + 1 + (adjNode->getLinks().size())/weight, adjNode));
       }
     }
   }
   if (heap.empty()) return vector<WikiNode *>();
-  // Backtracking parents
+
+  /* Backtracking parents to obtain path */
   WikiNode *currNode = heap.top().second;
   path.push_back(currNode);
   while (childParent[currNode].second != NULL) {

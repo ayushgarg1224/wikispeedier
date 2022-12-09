@@ -11,8 +11,6 @@
 
 using namespace std;
 
-// using recursive_directory_iterator = filesystem::directory_iterator;
-
 Graph::Graph(){}
 
 /* NOTE: Deleting a graph will delete all node objects so do not delete individual nodes after deleting the graph */
