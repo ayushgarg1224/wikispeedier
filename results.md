@@ -4,8 +4,8 @@
 
 
 #### Output
-![output](/Output_PNG/Result.png)
-![output](/Output_PNG/Result2.png)
+![output](/Output_PNG/Results.png)
+![output](/Output_PNG/Results2.png)
 
 ### Overview of tests
 The test cases we have written verify that the data parsing algortihm (the wikinode and the graph functions) works as expected by construtcting an accurate graph based on a dummy dataset. We also test for the accuracy of all our algorithms, by testing for valid paths, impossible paths, and expected paths between nodes from the dummy dataset. Furthermore, for Dijkstra's and IDDFS we have unique test cases for a weighted graph and out of depth graph respectively.
