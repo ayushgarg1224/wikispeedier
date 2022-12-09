@@ -69,7 +69,7 @@ void Algorithm::printPath(vector<WikiNode*> path){
 /// @param start start Starting page
 /// @param end end Destination page
 /// @return Vector containing the order of pages to visit for the shortest path
-vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end) {
+vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end, float weight) {
   typedef pair<float, WikiNode *> distPair;
   priority_queue<distPair, vector<distPair>, greater<distPair>> heap; // to shave time off lookup for the node with minimum distance
   map<WikiNode *, pair<float,WikiNode *>> childParent; // Maps wikinode:pair<parent, distance to parent>
@@ -87,7 +87,7 @@ vector<WikiNode *> Algorithm::getDijkstraPath(WikiNode *start, WikiNode *end) {
       if (childParent.find(adjNode) == childParent.end() || distance < childParent[adjNode].first) {
         childParent[adjNode] = top; // Update the neighbors' parents
         heap.push(
-            make_pair(distance + 1 + (adjNode->getLinks().size())/500.0, adjNode)); // Push current node to heap
+            make_pair(distance + 1 + (adjNode->getLinks().size())/weight, adjNode)); // Push current node to heap
       }
     }
   }

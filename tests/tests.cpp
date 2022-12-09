@@ -14,17 +14,17 @@
 
 void testGraphSize(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
-    assert(graph->getMap().size() == 10);
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph using the dummy data set
+    assert(graph->getMap().size() == 10);                           //check if the size of the graph map is 10 (no. of articles)
     delete graph;
 }
 
 void testLinks(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
-    vector<WikiNode*> links = graph->getPage("A")->getLinks();
-    assert(links.size() == 3);
-    assert(!links[0]->getName().compare("B"));
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph using the dummy data set
+    vector<WikiNode*> links = graph->getPage("A")->getLinks();      //get all the pages linked to A
+    assert(links.size() == 3);      //confirming there are three linked articles
+    assert(!links[0]->getName().compare("B"));  //comparing the function returned value against the expected values
     assert(!links[1]->getName().compare("C"));
     assert(!links[2]->getName().compare("D"));
     delete graph;
@@ -32,9 +32,9 @@ void testLinks(){
 
 void testAddNode(){
     Graph* graph = new Graph();
-    WikiNode* node = new WikiNode("random_name!@#$%^&*(");
+    WikiNode* node = new WikiNode("random_name!@#$%^&*(");  //making a dummy node to add to the graph
     graph->addNode(node);
-    assert(!graph->getPage("random_name!@#$%^&*(")->getName().compare(node->getName()));
+    assert(!graph->getPage("random_name!@#$%^&*(")->getName().compare(node->getName()));    //checking if the node was added
     delete graph;
 }
 
@@ -42,24 +42,24 @@ void testAddNode(){
 /* WIKINODE TESTS */
 
 void testIsLinkedTo(){
-    WikiNode* A = new WikiNode("A");
+    WikiNode* A = new WikiNode("A");    //creating a pair of dummy wikinodes
     WikiNode* B = new WikiNode("B");
 
-    A->addConnection(B);
+    A->addConnection(B);        //using the addConnection function to connect A and B
 
-    assert(A->isLinkedTo(B));
+    assert(A->isLinkedTo(B));   //checking if the addConnection function worked
     assert(A->isLinkedTo("B"));
     delete A; delete B;
 }
 
 void testGetLinks(){
-    WikiNode* A = new WikiNode("A");
+    WikiNode* A = new WikiNode("A");    //creating dummy nodes
     WikiNode* B = new WikiNode("B");
     WikiNode* C = new WikiNode("C");
 
-    A->addConnection(B);
+    A->addConnection(B);    //adding connections
     A->addConnection(C);
-    vector<WikiNode*> links = A->getLinks();
+    vector<WikiNode*> links = A->getLinks();    //checking if getLinks() function works as intended
 
     assert(links[0] == B);
     assert(links[1] == C);
@@ -68,46 +68,143 @@ void testGetLinks(){
 
 /* BFS TESTS */
 
-void testValidPath(){
+void testValidPathBFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
-    WikiNode* start = graph->getPage("H");
-    WikiNode* end = graph->getPage("E");
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph from the dummy data set
+    WikiNode* start = graph->getPage("H");  //selecting an article to start BFS from
+    WikiNode* end = graph->getPage("E");    //selecting an article to end BFS on
 
     Algorithm* alg = new Algorithm(graph);
-    vector<WikiNode*> path = alg->getBFSPath(start, end);
+    vector<WikiNode*> path = alg->getBFSPath(start, end);   //calling the BFS function to find the shortest path between H and E nodes
 
-    assert(!path[0] ->getName().compare("H"));
-    assert(!path[path.size()-1] ->getName().compare("E"));
+    assert(!path[0] ->getName().compare("H"));  //checking if the path actually does start from H
+    assert(!path[path.size()-1] ->getName().compare("E"));  //checking if the path actually does end on E
     delete graph; delete alg; 
 }
 
-void testImpossiblePath(){
+void testImpossiblePathBFS(){
     Graph* graph = new Graph();
     graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
-    WikiNode* start = graph->getPage("F");
+    WikiNode* start = graph->getPage("F"); //initiating two nodes that are not connected from the dummy data set
     WikiNode* end = graph->getPage("I");
 
     Algorithm* alg = new Algorithm(graph);
-    vector<WikiNode*> path = alg->getBFSPath(start, end);
-    assert(path.size() == 0);
+    vector<WikiNode*> path = alg->getBFSPath(start, end); //running BFS for the two disconnected nodes
+    assert(path.size() == 0);   //checking if we got an invalid path output which is what we expect
     delete graph; delete alg;
 }
 
 void testEqualPathsBFS(){
     Graph* graph = new Graph();
     graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
-    WikiNode* start = graph->getPage("J");
+    WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
     WikiNode* end = graph->getPage("B");
 
     Algorithm* alg = new Algorithm(graph);
-    vector<WikiNode*> path = alg->getBFSPath(start, end);
+    vector<WikiNode*> path = alg->getBFSPath(start, end);   //running the BFS algorithm on them
 
-    assert(!path[1]->getName().compare("A"));
+    assert(!path[1]->getName().compare("A"));   //checking if the returned path is indeed J->A->B
+    delete graph; delete alg;
+}
+
+/* DIJKSTRA'S ALGORITHM TESTS */
+
+void testValidPathDijkstra(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph from the dummy data set
+    WikiNode* start = graph->getPage("H");  //selecting an article to start Dijkstra's from
+    WikiNode* end = graph->getPage("E");    //selecting an article to end Dijkstra's on
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getDijkstraPath(start, end);   //calling the Dijkstra's function to find the shortest path between H and E nodes
+
+    assert(!path[0] ->getName().compare("H"));  //checking if the path actually does start from H
+    assert(!path[path.size()-1] ->getName().compare("E"));  //checking if the path actually does end on E
+    delete graph; delete alg; 
+}
+
+void testImpossiblePathDijkstra(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    WikiNode* start = graph->getPage("F"); //initiating two nodes that are not connected from the dummy data set
+    WikiNode* end = graph->getPage("I");
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getDijkstraPath(start, end); //running Dijkstra's for the two disconnected nodes
+    assert(path.size() == 0);   //checking if we got an invalid path output which is what we expect
+    delete graph; delete alg;
+}
+
+void testEqualPathsDijkstra(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
+    WikiNode* end = graph->getPage("B");
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getDijkstraPath(start, end, 3.0);   //running the Dijkstra's algorithm on them with weight factor 3
+    //there are two ways to get from J to B, J->A->B and J->E->B but A has three outgoing links while E only has 2 so Dijkstra should prefer E
+    assert(!path[1]->getName().compare("E"));   //checking if the returned path is indeed J->E->B
+    delete graph; delete alg;
+}
+
+/* IDFS TESTS */
+
+void testOutofDepthIDDFS(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph from the dummy data set
+    WikiNode* start = graph->getPage("H");  //selecting an article to start IDFS from
+    WikiNode* end = graph->getPage("E");    //selecting an article to end IDFS on
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getIDDFSPath(start, end);   //calling the IDFS function to find the shortest path between H and E nodes
+   
+   assert(path.size() == 0);   //checking if we got an invalid path output which is what we expect since H and E have a depth > 5
+    delete graph; delete alg; 
+}
+
+void testImpossiblePathIDDFS(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    WikiNode* start = graph->getPage("F"); //initiating two nodes that are not connected from the dummy data set
+    WikiNode* end = graph->getPage("I");
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getIDDFSPath(start, end); //running IDFS for the two disconnected nodes
+    assert(path.size() == 0);   //checking if we got an invalid path output which is what we expect
+    delete graph; delete alg;
+}
+
+void testValidPathsIDDFS(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
+    WikiNode* end = graph->getPage("B");
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getIDDFSPath(start, end);   //running the IDFS algorithm on them
+    
+    assert(!path[0]->getName().compare("J"));   //checking if the returned path starts with J like it should
+    assert(!path[path.size()-1]->getName().compare("B"));   //checking if the returned path starts with B like it should
+    delete graph; delete alg;
+}
+
+
+void testEqualPathsIDDFS(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
+    WikiNode* end = graph->getPage("B");
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getIDDFSPath(start, end);   //running the IDFS algorithm on them
+    
+    assert(!path[1]->getName().compare("A"));   //checking if the returned path is indeed J->A->B
     delete graph; delete alg;
 }
 
 /* MAIN TEST FUNCTION */
+
 int main(){
     /* Graph */
     testGraphSize();
@@ -121,16 +218,23 @@ int main(){
     std::cout << "WikiNode tests passed!" << std::endl;
 
     /* BFS */
-    testValidPath();
-    testImpossiblePath();
+    testValidPathBFS();
+    testImpossiblePathBFS();
     testEqualPathsBFS();
     std::cout << "BFS tests passed" << std::endl;
 
     /* Dijkstra */
-    //TODO
-    
+    testValidPathDijkstra();
+    testImpossiblePathDijkstra();
+    testEqualPathsDijkstra();
+    std::cout << "Dijkstra tests passed" << std::endl;
+
     /* IDDFS */
-    //TODO
+    testOutofDepthIDDFS();
+    testValidPathsIDDFS();
+    testImpossiblePathIDDFS();
+    testEqualPathsIDDFS();
+    std::cout << "IDDFS tests passed" << std::endl;
 
     std::cout << "\n#################################" << std::endl;
     std::cout <<   "##### ALL TEST CASES PASSED #####" << std::endl;
