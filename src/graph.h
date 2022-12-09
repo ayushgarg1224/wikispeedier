@@ -17,8 +17,8 @@ class Graph{
         ~Graph();
         WikiNode* getPage(string page_name);
         WikiNode* getRandomPage();
-        void createGraphFromFile(string articles_path = ARTICLES, string links_path = LINKS, 
-                                 int n_articles = NUM_ARTICLES, int n_links = NUM_LINKS, bool print_progress = true);
+        void createGraphFromFile(bool print_progress, string articles_path = ARTICLES, string links_path = LINKS, 
+                                 int n_articles = NUM_ARTICLES, int n_links = NUM_LINKS);
         void addNode(WikiNode* node);
         map<string, WikiNode*>& getMap();
 

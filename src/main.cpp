@@ -16,10 +16,10 @@ int main(int argc, char* argv[]){//int argc, char** argv
         string article_path(argv[1]);
         string links_path(argv[2]);
         cout << "\nCustom Articles: " << article_path << " | Custom Links: " << links_path << endl;
-        graph->createGraphFromFile(article_path, links_path, atoi(argv[3]), atoi(argv[4]));
+        graph->createGraphFromFile(true,article_path, links_path, atoi(argv[3]), atoi(argv[4]));
     }catch(...){
         cout << "\nUsing default articles & links..." << endl;
-        graph->createGraphFromFile();
+        graph->createGraphFromFile(true);
     }
 
     Algorithm* alg = new Algorithm(graph);

@@ -65,7 +65,7 @@ WikiNode* Graph::getRandomPage(){
 /// @brief Populates the graph object from given dataset files
 /// @param articles_path Path to file containing graph data
 /// @param links_path Path to file containing links data
-void Graph::createGraphFromFile(string articles_path, string links_path, int n_articles, int n_links, bool print_progress){
+void Graph::createGraphFromFile(bool print_progress, string articles_path, string links_path, int n_articles, int n_links){
     /* 
     Parses through and create WikiNodes. Add these via pointer to the map.
     Dataset says to use URLDecorder (Java) to decode article names.

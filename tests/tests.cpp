@@ -14,14 +14,14 @@
 
 void testGraphSize(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph using the dummy data set
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);   //creating a graph using the dummy data set
     assert(graph->getMap().size() == 10);                           //check if the size of the graph map is 10 (no. of articles)
     delete graph;
 }
 
 void testLinks(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph using the dummy data set
+    graph->createGraphFromFile(false,TEST_ARTICLES, TEST_LINKS);   //creating a graph using the dummy data set
     vector<WikiNode*> links = graph->getPage("A")->getLinks();      //get all the pages linked to A
     assert(links.size() == 3);      //confirming there are three linked articles
     assert(!links[0]->getName().compare("B"));  //comparing the function returned value against the expected values
@@ -70,7 +70,7 @@ void testGetLinks(){
 
 void testValidPathBFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph from the dummy data set
+    graph->createGraphFromFile(false,TEST_ARTICLES, TEST_LINKS);   //creating a graph from the dummy data set
     WikiNode* start = graph->getPage("H");  //selecting an article to start BFS from
     WikiNode* end = graph->getPage("E");    //selecting an article to end BFS on
 
@@ -84,7 +84,7 @@ void testValidPathBFS(){
 
 void testImpossiblePathBFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("F"); //initiating two nodes that are not connected from the dummy data set
     WikiNode* end = graph->getPage("I");
 
@@ -96,7 +96,7 @@ void testImpossiblePathBFS(){
 
 void testEqualPathsBFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
     WikiNode* end = graph->getPage("B");
 
@@ -111,7 +111,7 @@ void testEqualPathsBFS(){
 
 void testValidPathDijkstra(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph from the dummy data set
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);   //creating a graph from the dummy data set
     WikiNode* start = graph->getPage("H");  //selecting an article to start Dijkstra's from
     WikiNode* end = graph->getPage("E");    //selecting an article to end Dijkstra's on
 
@@ -125,7 +125,7 @@ void testValidPathDijkstra(){
 
 void testImpossiblePathDijkstra(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("F"); //initiating two nodes that are not connected from the dummy data set
     WikiNode* end = graph->getPage("I");
 
@@ -135,9 +135,9 @@ void testImpossiblePathDijkstra(){
     delete graph; delete alg;
 }
 
-void testEqualPathsDijkstra(){
+void testEqualPathsDijkstraWeighted(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
     WikiNode* end = graph->getPage("B");
 
@@ -145,6 +145,22 @@ void testEqualPathsDijkstra(){
     vector<WikiNode*> path = alg->getDijkstraPath(start, end, 3.0);   //running the Dijkstra's algorithm on them with weight factor 3
     //there are two ways to get from J to B, J->A->B and J->E->B but A has three outgoing links while E only has 2 so Dijkstra should prefer E
     assert(!path[1]->getName().compare("E"));   //checking if the returned path is indeed J->E->B
+    
+    delete graph; delete alg;
+}
+
+void testEqualPathsDijkstraBFS(){
+    Graph* graph = new Graph();
+    graph->createGraphFromFile(false,TEST_ARTICLES, TEST_LINKS);
+    WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
+    WikiNode* end = graph->getPage("B");
+
+    Algorithm* alg = new Algorithm(graph);
+    vector<WikiNode*> path = alg->getDijkstraPath(start, end, 500.0);   //running the Dijkstra's algorithm on them with weight factor 500
+    //Since the weight factor is 500 the number of outgoing links shouldnt affect the output and we should get the same result as BFS
+    vector<WikiNode*> BFSpath = alg->getBFSPath(start, end); 
+    assert(path == BFSpath);   //checking if the returned path is the same as BFS
+    
     delete graph; delete alg;
 }
 
@@ -152,7 +168,7 @@ void testEqualPathsDijkstra(){
 
 void testOutofDepthIDDFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);   //creating a graph from the dummy data set
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);   //creating a graph from the dummy data set
     WikiNode* start = graph->getPage("H");  //selecting an article to start IDFS from
     WikiNode* end = graph->getPage("E");    //selecting an article to end IDFS on
 
@@ -165,7 +181,7 @@ void testOutofDepthIDDFS(){
 
 void testImpossiblePathIDDFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("F"); //initiating two nodes that are not connected from the dummy data set
     WikiNode* end = graph->getPage("I");
 
@@ -177,7 +193,7 @@ void testImpossiblePathIDDFS(){
 
 void testValidPathsIDDFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false,TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
     WikiNode* end = graph->getPage("B");
 
@@ -192,7 +208,7 @@ void testValidPathsIDDFS(){
 
 void testEqualPathsIDDFS(){
     Graph* graph = new Graph();
-    graph->createGraphFromFile(TEST_ARTICLES, TEST_LINKS, false);
+    graph->createGraphFromFile(false, TEST_ARTICLES, TEST_LINKS);
     WikiNode* start = graph->getPage("J");  //initiating two connected nodes from the dummy data set
     WikiNode* end = graph->getPage("B");
 
@@ -226,7 +242,8 @@ int main(){
     /* Dijkstra */
     testValidPathDijkstra();
     testImpossiblePathDijkstra();
-    testEqualPathsDijkstra();
+    testEqualPathsDijkstraWeighted();
+    testEqualPathsDijkstraBFS();
     std::cout << "Dijkstra tests passed" << std::endl;
 
     /* IDDFS */
