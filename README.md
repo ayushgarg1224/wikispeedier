@@ -19,6 +19,7 @@ IDDFS combines the speed efficiency of BFS and the space efficiency of DFS. In I
 * Our makefile is stored in the foler titled "build".
 * Our final presentation is the video titled "final_presentation.mp4"
 * Our final written report is the file titled "results.md"
+* An image of the results is stored in the folder titled "Output_PNG"
 * Our team contract and team proposal are the files "team-contract.md" and "team-proposal.md"
 ## Running the Program
 ##### Main
