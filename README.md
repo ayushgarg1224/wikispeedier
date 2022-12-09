@@ -17,7 +17,7 @@ IDDFS combines the speed efficiency of BFS and the space efficiency of DFS. In I
 * Our test cases are stored in the folder titled "tests" within the tests.cpp file.
 * Our dataset is stored within the folder titled "dataset".
 * Our makefile is stored in the foler titled "build".
-* Our final presentation is the video titled "225_final_project.mp4"
+* Our final presentation is the video titled "final_presentation.mp4"
 * Our final written report is the file titled "results.md"
 * Our team contract and team proposal are the files "team-contract.md" and "team-proposal.md"
 ## Running the Program
