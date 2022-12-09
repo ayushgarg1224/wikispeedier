@@ -157,7 +157,7 @@ vector<WikiNode*> Algorithm::getIDDFSPath(WikiNode* start, WikiNode* end, int ma
     do {
         result = getDLSPath(start, end, currDepth);
         ++currDepth;
-        cout << "IDDFS at depth: " << currDepth << endl;
+        // cout << "IDDFS at depth: " << currDepth << endl;
     } while (result.empty() && currDepth < max_depth); // while not done
     return result;
 }
@@ -199,7 +199,7 @@ vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end,
         result = getDLSPathVisited(start, end, currDepth, visited);
         visited->clear();
         ++currDepth;
-        cout << "IDDFS_Visited at depth: " << currDepth << endl;
+        // cout << "IDDFS_Visited at depth: " << currDepth << endl;
     } while (result.empty() && currDepth < max_depth); // while not done
     return result;
 }

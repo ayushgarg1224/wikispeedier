@@ -85,6 +85,7 @@ void Graph::createGraphFromFile(string articles_path, string links_path, bool pr
     string name, line, linked;
     /* Add nodes for each article (no links yet) */
     if(print_progress) cout << "\n-----LOADING ARTICLES-----" << endl;
+
     int count = 1;
     while(getline(articles, name)){
         string test1 = "tests"; string test2 = "\ntests";
@@ -97,11 +98,12 @@ void Graph::createGraphFromFile(string articles_path, string links_path, bool pr
 
     /* Go through link lines (article + spaces + linked article)*/
     if(print_progress) cout << "\n-----LOADING LINKS-----" << endl;
-    count = 0;
+    count = 1;
 
     while(getline(links, line)){
-        name = line.substr(0, line.find('	'));        //up to tab is the article name
-        linked = line.substr(line.find('	') + 1);    //past the tab is the linked article
+        name = line.substr(0, line.find('\t'));        //up to tab is the article name
+        linked = line.substr(line.find('\t') + 1);    //past the tab is the linked article
+
         string test1 = "tests"; string test2 = "\ntests"; 
         if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"

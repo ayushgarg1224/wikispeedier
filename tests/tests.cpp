@@ -126,6 +126,12 @@ int main(){
     testEqualPathsBFS();
     std::cout << "BFS tests passed" << std::endl;
 
+    /* Dijkstra */
+    //TODO
+    
+    /* IDDFS */
+    //TODO
+
     std::cout << "\n#################################" << std::endl;
     std::cout <<   "##### ALL TEST CASES PASSED #####" << std::endl;
     std::cout <<   "#################################" << std::endl;
