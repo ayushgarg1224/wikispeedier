@@ -3,12 +3,7 @@
 ## Names: Nathaniel Dyer, Ayush Garg, Ethan Greenwald, Nitya Sunkad
 
 
-Leading Question 
-[Ayush]
-Algorithms
-
-We used the following algorithms to find the most efficient path from a chosen source Wikipedia article to a chosen destination Wikipedia article.
-
+#### Output
 
 
 BFS
