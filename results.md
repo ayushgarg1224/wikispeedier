@@ -3,7 +3,7 @@
 ## Names: Nathaniel Dyer, Ayush Garg, Ethan Greenwald, Nitya Sunkad
 
 
-#### Output
+### Output
 ![output](/Output_PNG/Results.png)
 ![output](/Output_PNG/Results2.png)
 
@@ -37,3 +37,7 @@ For IDDFS we are testing four situations:
 * If a valid path exists, it starts and ends where its supposed to
 * A valid path exists between two given nodes but the distance between the nodes is greater than the maximum depth specified
 * A valid path, within the depth threshold, exists and is returned as expected
+
+### Answer to Leading Question
+Our leading objective was finding the shortest path between any two given wikipedia articles from the SNAP dataset. We were able to do so using three different algorithms: BFS, Dijkstra's, IDDFS. We discovered that IDDFS was by far the fastest algorithm to discover the most efficient path due to its optimization of time and space complexity. Furthermore, the occurrence of a path not found between source and destination Wikipedia articles was more common than anticipated
+
