@@ -167,7 +167,7 @@ vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
 /// @brief This function determines the shortest path between two WikiNodes using Iterative Deepening Depth-First Search; no visited
 /// @param start Starting page
 /// @param end Destination page
-/// @param max_depth Deepest depth it will iterate to (inclusive)
+/// @param max_depth Deepest depth it will iterate to (exclusive)
 /// @return Vector containing the order of pages to visit for the shortest path
 vector<WikiNode*> Algorithm::getIDDFSPath(WikiNode* start, WikiNode* end, int max_depth) {
     int currDepth = 0;
@@ -212,7 +212,7 @@ needed to store these in the map.
 /// @brief This function determines the shortest path between two WikiNodes using Iterative Deepening Depth-First Search; no visited
 /// @param start Starting page
 /// @param end Destination page
-/// @param max_depth deepest depth it will iterate to (inclusive)
+/// @param max_depth deepest depth it will iterate to (exclusive)
 /// @return Vector containing the order of pages to visit for the shortest path
 vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end, int max_depth) {
     int currDepth = 0;
