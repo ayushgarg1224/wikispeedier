@@ -14,6 +14,6 @@ TODO!!!!!!!!!!!!!!!!!
 TODO!!!!!!!!!!!!!!!!!
 ## Running the Program
 ##### Main
-To run this program, install make and g++, then clone the repository and navigate to `./wikispeedier/build/`. From here, running `make main` will create `main.exe`. In the same directoy, call `./main` to run the program on the default dataset. If you wish to use custom articles and links, create a tsv for each. The articles tsv should just have the article names on each line. The links tsv should have the article and linked article separated by a tab on each line. Once these are created, run `./main <articles_path> <links_path>` to run the program. 
+To run this program, install make and g++, then clone the repository and navigate to `./wikispeedier/build/`. From here, running `make main` will create `main.exe`. In the same directoy, call `./main` to run the program on the default dataset. If you wish to use custom articles and links, create a tsv for each. The articles tsv should just have the article names on each line. The links tsv should have the article and linked article separated by a tab on each line. Once these are created, run `./main <articles_path> <links_path> <article_count> <links_count>` to run the program. Article_count and links_count are the total lines in each tsv respectively.
 ##### Testing
 Test cases have also been written for this program and can be executed by first running `make test` from `../build`. Then, `./test` will run all test cases. These can be viewed in `./wikispeedier/tests/tests.cpp`. 

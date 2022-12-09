@@ -9,9 +9,6 @@
 #include <string>
 #include <iostream>
 
-#define NUM_ARTICLES 4604
-#define NUM_LINKS 119882
-
 using namespace std;
 
 // using recursive_directory_iterator = filesystem::directory_iterator;
@@ -58,7 +55,7 @@ void printProgress(int count, int total){
 WikiNode* Graph::getRandomPage(){
     sleep(1);                    //ensure at least 1 second has passed since the last call so you don't get duplicates
     srand((unsigned) time(NULL));
-    int idx = rand()%NUM_ARTICLES;
+    int idx = rand()%num_articles;
     for(auto it = name_node_map.begin(); it != name_node_map.end(); ++it)
         if(idx-- == 0)
             return it->second;
@@ -68,7 +65,7 @@ WikiNode* Graph::getRandomPage(){
 /// @brief Populates the graph object from given dataset files
 /// @param articles_path Path to file containing graph data
 /// @param links_path Path to file containing links data
-void Graph::createGraphFromFile(string articles_path, string links_path, bool print_progress){
+void Graph::createGraphFromFile(string articles_path, string links_path, int n_articles, int n_links, bool print_progress){
     /* 
     Parses through and create WikiNodes. Add these via pointer to the map.
     Dataset says to use URLDecorder (Java) to decode article names.
@@ -81,6 +78,9 @@ void Graph::createGraphFromFile(string articles_path, string links_path, bool pr
     - For each link in links.tsv, addLink() to current WikiNode
     - Call addNode() on graph to insert node
      */
+    num_articles = n_articles;
+    num_links = n_links;
+
     ifstream articles(articles_path), links(links_path);
     string name, line, linked;
     /* Add nodes for each article (no links yet) */
@@ -91,9 +91,8 @@ void Graph::createGraphFromFile(string articles_path, string links_path, bool pr
         string test1 = "tests"; string test2 = "\ntests";
         if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         addNode(new WikiNode(name));
-
         if(print_progress)
-            printProgress(count++, NUM_ARTICLES);
+            printProgress(count++, num_articles);
     }
 
     /* Go through link lines (article + spaces + linked article)*/
@@ -108,8 +107,14 @@ void Graph::createGraphFromFile(string articles_path, string links_path, bool pr
         if(test1 == test2) linked.pop_back(); //checking for different OS. Some OS consider \n to be a different character
         getPage(name)->addConnection(getPage(linked));  //add a link from "name" to "linked"
 
+        // cout << getPage(name)->getName() << ": ";
+        // vector<WikiNode*> _ = getPage(name)->getLinks();
+        // for(auto& w : _)
+        //     cout << w->getName() << " ";
+        // cout << endl;
+        
         if(print_progress)
-            printProgress(count++, NUM_LINKS);
+            printProgress(count++, num_links);
     }
     
     if(print_progress) cout << "\n-----DONE-----" << endl;

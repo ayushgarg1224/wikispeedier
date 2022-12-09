@@ -42,6 +42,11 @@ vector<pair<vector<WikiNode*>, double>> Algorithm::compareAlgs(WikiNode* start, 
     time = endTime - startTime;
     paths.push_back(pair<vector<WikiNode*>, double>(path, time.count()));
 
+    startTime = high_resolution_clock::now();
+    path = getIDDFSPathVisited(start, end);
+    endTime = high_resolution_clock::now();
+    time = endTime - startTime;
+    paths.push_back(pair<vector<WikiNode*>, double>(path, time.count()));
     return paths;
 }
 
@@ -149,42 +154,47 @@ vector<WikiNode*> Algorithm::getBFSPath(WikiNode* start, WikiNode* end){
 /// @brief This function determines the shortest path between two WikiNodes using Iterative Deepening Depth-First Search; no visited
 /// @param start Starting page
 /// @param end Destination page
-/// @param max_depth deepest depth it will iterate to (inclusive)
+/// @param max_depth Deepest depth it will iterate to (inclusive)
 /// @return Vector containing the order of pages to visit for the shortest path
 vector<WikiNode*> Algorithm::getIDDFSPath(WikiNode* start, WikiNode* end, int max_depth) {
     int currDepth = 0;
     vector<WikiNode*> result;
     do {
-        result = getDLSPath(start, end, currDepth);
-        ++currDepth;
-        // cout << "IDDFS at depth: " << currDepth << endl;
-    } while (result.empty() && currDepth < max_depth); // while not done
+        result = getDLSPath(start, end, currDepth);     // Call helper function based on current depth
+        ++currDepth;                                    // Increment current depth
+    } while (result.empty() && currDepth < max_depth);  // Repeat until path found or max_depth is reached
     return result;
 }
 
 /// @brief Helper function for IDDFS. This function determines the shortest path between two WikiNodes using a depth-limited Depth-First Search.
 /// @param start Starting page
 /// @param end Destination page
-/// @param depth depth to check for end from
-/// @param visited pointer to vector of all nodes visited from most recently visited to least recently visited
+/// @param depth Depth to check for end from
+/// @param visited Pointer to vector of all nodes visited from most recently visited to least recently visited
 /// @return Pair containing vector of steps and bool if done (found end or none remaining)
 vector<WikiNode*> Algorithm::getDLSPath(WikiNode* start, WikiNode* end, int depth) {
     if (depth == 0) {
-        return (start == end) ? vector<WikiNode*>(1, start) : vector<WikiNode*>();
-    } else {
-        for (WikiNode* child : start->getLinks()) {
+        return (start == end) ? vector<WikiNode*>(1, start) : vector<WikiNode*>();      // If at zero depth, return destination node (if reached) or empty vector (no possible path)
+    } else {   
+        for (WikiNode* child : start->getLinks()) {                                     // For each linked article from start, recursively call getDLSPath with decremented depth
             vector<WikiNode*> result = getDLSPath(child, end, depth -1);
-            if (!result.empty()) { // if result not empty (path exists)
-                result.insert(result.begin(), start);
+            if (!result.empty()) {                                                      // If result is not empty (path exists)...
+                result.insert(result.begin(), start);                                   // ... add the start node to the path and return
                 return result;
             }
         }
-        return vector<WikiNode*>();
+        return vector<WikiNode*>();                                                     // Case where no path can be found: return empty vector.
     }
 
 }
 
-// VISTED VERSIONS BELOW //
+/*
+The following two functions are versions of IDDFS
+the utilize a visited map to keep track of visited nodes.
+This can be used to minimize the number of visited nodes
+but may not be beneficial since there is additional time
+needed to store these in the map.
+*/
 
 /// @brief This function determines the shortest path between two WikiNodes using Iterative Deepening Depth-First Search; no visited
 /// @param start Starting page
@@ -199,7 +209,6 @@ vector<WikiNode*> Algorithm::getIDDFSPathVisited(WikiNode* start, WikiNode* end,
         result = getDLSPathVisited(start, end, currDepth, visited);
         visited->clear();
         ++currDepth;
-        // cout << "IDDFS_Visited at depth: " << currDepth << endl;
     } while (result.empty() && currDepth < max_depth); // while not done
     return result;
 }
